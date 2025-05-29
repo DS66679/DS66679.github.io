@@ -1,0 +1,125 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  background: linear-gradient(45deg, #450d4f 0%,
+   rgb(165 60 162) 50%, rgb(227 38 99) 100%);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  user-select: none;
+}
+#game {
+  border: 1px solid white;
+}
+#figuresee {
+  border: 1px solid white;
+}
+#menuarea{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#menubuttonsarea{
+  position: absolute;
+  top: 20%;
+  height: 60%;
+  width: 30%;
+}
+.menubuttons{
+  height: 16%;
+  width: 100%;
+  font-size: 300%;
+  font-family: fantasy;
+  overflow: hidden;
+  margin-top: 20%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+}
+.menubuttons:hover{
+  background-color: rgb(160, 160, 160);
+  color: white;
+}
+#settingsarea{
+  position: absolute;
+  height: 80%;
+  width: 70%;
+  top: 10%;
+  background-color: rgb(96 10 103 / 95%);
+  display: flex;
+  justify-content: center;
+}
+#settingsclosebutton{
+  position: absolute;
+  left: 0;
+}
+#figurecontainer{
+  position: absolute;
+  height: auto;
+  width: auto;
+  top: 3%;
+  display: flex;
+  align-items: center;
+}
+#figurearea{
+  height: 200px;
+  width: 350px;
+  margin: 0px 15px;
+  background-color: #450d4f;
+}
+.triangle {
+  width: 0;
+  height: 0;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  border-bottom: 50px solid rgb(168, 168, 168);
+}
+.triangle:hover {
+  border-bottom: 50px solid rgb(121, 121, 121);
+}
+#trianglesettings1{
+  transform: rotate(-90deg);
+}
+#trianglesettings2{
+  transform: rotate(90deg);
+}
+#colorfigure{
+  position: absolute;
+  top: 31%;
+  left: 38%;
+  width: 25%;
+  display: flex;
+  justify-content: space-between;
+}
+/* #colorchoose{
+
+} */
+#endarea{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 640px;
+  width: 320px;
+  
+  background-color: #450d4f;
+}
+#returntomenu{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 16%;
+  width: 75%;
+  font-size: 200%;
+  font-family: fantasy;
+  overflow: hidden;
+  border-radius: 50%;
+}
+#returntomenu:hover{
+  background-color: rgb(160, 160, 160);
+  color: white;
+}
