@@ -1,6 +1,6 @@
-import { create, createbutton } from "/js/creators.js";
-import { menu } from "/js/menu.js";
-import { startgame } from "/js/tetris.js";
+import { create, createbutton } from "/JS/creators.js";
+import { menu } from "/JS/menu.js";
+import { startgame } from "/JS/tetris.js";
 export function chooseprofile() {
     while (document.body.firstChild) { document.body.removeChild(document.body.firstChild); }
     create("div", { id: "chooseprofilearea" }, document.body);

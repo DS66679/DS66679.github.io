@@ -1,4 +1,4 @@
-import { menu } from "/js/menu.js";
+import { menu } from "/JS/menu.js";
 (function () {
   window.addEventListener("load", loadsait);
 

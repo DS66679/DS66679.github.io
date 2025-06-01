@@ -1,5 +1,5 @@
-import { create } from "/js/creators.js";
-import { figures, colors } from "/js/constants.js";
+import { create } from "/JS/creators.js";
+import { figures, colors } from "/JS/constants.js";
 //    *Анимация фигур на фоне (Сильная нагрузка)
 //  Работа тетриса расписана ниже, в startgame!
 //backgroundfigures переработанная версия

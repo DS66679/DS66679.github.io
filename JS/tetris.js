@@ -1,6 +1,6 @@
-import { create, createbutton } from "/js/creators.js";
-import { figures, colors } from "/js/constants.js";
-import { menu, returnstl, returnstr, returnspeed } from "/js/menu.js";
+import { create, createbutton } from "/JS/creators.js";
+import { figures, colors } from "/JS/constants.js";
+import { menu, returnstl, returnstr, returnspeed } from "/JS/menu.js";
 //////////////////{ТЕТРИС}///////////////////////
 export function startgame() {
     let stl = returnstl();

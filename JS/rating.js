@@ -1,5 +1,5 @@
-import { create } from "/js/creators.js";
-import { menu } from "/js/menu.js";
+import { create } from "/JS/creators.js";
+import { menu } from "/JS/menu.js";
 export function rating() {
     while (document.body.firstChild) { document.body.removeChild(document.body.firstChild); }
     const ratingarea = create("div", { id: "ratingarea" }, document.body);

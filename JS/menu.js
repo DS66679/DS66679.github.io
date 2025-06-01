@@ -1,8 +1,8 @@
-import { create, createbutton } from "/js/creators.js";
-import { chooseprofile } from "/js/profiles.js";
-import { rating } from "/js/rating.js";
-import { backgroundfigures } from "/js/backgroundfigures.js";
-import { colors } from "/js/constants.js";
+import { create, createbutton } from "/JS/creators.js";
+import { chooseprofile } from "/JS/profiles.js";
+import { rating } from "/JS/rating.js";
+import { backgroundfigures } from "/JS/backgroundfigures.js";
+import { colors } from "/JS/constants.js";
 export function menu() {
     while (document.body.firstChild) { document.body.removeChild(document.body.firstChild); }
     create("div", { id: "menuarea" }, document.body);
@@ -59,15 +59,15 @@ function settings() {
         trianglesettings1.addEventListener("click", () => {
             numfigur--;
             if (numfigur <= 1) numfigur = 6;
-            figurecolorsee.setAttribute("src", "/data/f" + numfigur + ".png")
+            figurecolorsee.setAttribute("src", "/Data/f" + numfigur + ".png")
         });
         create("div", { id: "figurearea" }, figurecontainer);
-        const figurecolorsee = create("img", { id: "figurecolorsee", src: "/data/f0.png", alt: "" }, figurearea);
+        const figurecolorsee = create("img", { id: "figurecolorsee", src: "/Data/f0.png", alt: "" }, figurearea);
         const trianglesettings2 = create("div", { id: "trianglesettings2", class: "triangle" }, figurecontainer);
         trianglesettings2.addEventListener("click", () => {
             numfigur++;
             if (numfigur >= 7) numfigur = 0;
-            figurecolorsee.setAttribute("src", "/data/f" + numfigur + ".png")
+            figurecolorsee.setAttribute("src", "/Data/f" + numfigur + ".png")
         });
 
         create("div", { id: "colorfigure" }, settingsarea);
