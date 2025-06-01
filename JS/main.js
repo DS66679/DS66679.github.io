@@ -27,9 +27,22 @@
       "J": "blue",
       "L": "orange"
     };
-    menu();
-    let settingsopen =false;
+    //localStorage.clear()
+    if (localStorage){
+      if(localStorage.scoretop==null){
+        let nullscoreresult = [["...","...","...","...","...","...","...","...","...","..."], [0,0,0,0,0,0,0,0,0,0]];
+        localStorage.setItem("scoretop", JSON.stringify(nullscoreresult));
+      }
+      if(localStorage.profiles==null){
+        //let newprofiles = [""]
+        localStorage.setItem("profiles","");
+      }
+    }
 
+    console.log(localStorage)
+    console.log(localStorage.profiles)
+
+    menu();
     function create(tag,attributes = {}, parent){
       const el = document.createElement(tag);
       for (const key in attributes) {
@@ -57,19 +70,20 @@
       create("div",{id: "menuarea"},document.body);
       create("div",{id: "menubuttonsarea"},menuarea);
       createbutton({id: "startbutton", class: "menubuttons"}, menubuttonsarea, "Старт", startgame);
-      createbutton({id: "testbutton", class: "menubuttons"}, menubuttonsarea, "Тест", fclick);
+      createbutton({id: "testbutton", class: "menubuttons"}, menubuttonsarea, "Результаты", startgame);
       createbutton({id: "settingsbutton", class: "menubuttons"}, menubuttonsarea, "Настройки", settings);
+      const openprofiles= create("div",{id: "openprofiles"},menuarea);
+      openprofiles.addEventListener("click",chooseprofile);
       backgroundfigures();
     }
 
     function settings(){
       let settingsarea = null;
-      if(settingsopen){
+      if(document.getElementById("settingsarea")!==null){
         document.getElementById("settingsarea").style.left = "15%";
         document.getElementById("settingsarea").style.top = "10%";
       }
       else{
-        settingsopen = true;
         settingsarea = create("div",{id: "settingsarea"},menuarea);
 
         let x = 0;
@@ -93,7 +107,6 @@
 
         let settingsclosebutton = create("img",{id: "settingsclosebutton", src:"Data/exit.jpg", alt:"Выйти"},settingsarea);
         settingsclosebutton.addEventListener("click", function(){
-          settingsopen = false;
           settingsarea.remove();
         });
 
@@ -106,6 +119,10 @@
         create("input",{id: "colorchoose", type: "color", value: "#0000ff"},colorfigure);
         createbutton({id: "colorchoosebutton"}, colorfigure, "Подтвердить", settings);
       }
+    }
+
+    function chooseprofile(){
+      
     }
 
     
@@ -158,6 +175,7 @@
             masfigures[Nfigure].count = 0;
             if(masfigures[Nfigure].stroka>=figurefield.length){
               masfigures[Nfigure].stroka=randomnum(-2,-30);
+              masfigures[Nfigure].speed=randomnum(8,32);
             }
           }
           backgroundcontext.fillStyle = colors[masfigures[Nfigure].name]; //Прорисовка фигуры
@@ -175,20 +193,33 @@
 
     //////////////////{ТЕТРИС}///////////////////////
 
+    
+
     function startgame(){
+      let score = 0;
+      let sec = 0;
+      let min = 0;
+      let timersec =null
       while (document.body.firstChild) {
         document.body.removeChild(document.body.firstChild);
       }
-      let size = 1; // Размеры поля
+      create("div",{id: "gamecontainer"},document.body);
+      create("div",{id: "gamestats"},gamecontainer);
+      const gamescore = create("div",{id: "gamescore"},gamestats);
+      scoreplus(0);
+      const gametime = create("div",{id: "gametime"},gamestats);
+      gametime.textContent="0:00";
+      timer();
+      create("div",{id: "pausearea"},gamecontainer);
+      const divpausemenu = create("div",{id: "divpausemenu"},pausearea);
+      divpausemenu.addEventListener("click",gamemenuon);
+      const divpause = create("div",{id: "divpause"},pausearea);
+      divpause.addEventListener("click",pause);
 
-      const canvas = document.createElement('canvas');
-      canvas.setAttribute("id", "game");
-      canvas.setAttribute("width", `${320*size}`);
-      canvas.setAttribute("height", `${640*size}`);
-      document.body.append(canvas);
+      let size = 1; // Размеры поля
+      const canvas = create("canvas",{id: "game", width: `${320*size}`, height: `${640*size}`},gamecontainer);
       const context = canvas.getContext("2d");
       
-      // Игровое поле
       let figurefield = [];
       for (let stroka = -2; stroka < 20*size; stroka++) {
         figurefield[stroka] = [];
@@ -203,10 +234,101 @@
       let figure = nextfigure(); //Текущая фигура
       let animationwork = null;  //https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
       let endgame = false;
+      let gamepause = false;
 
 
 
       //////////////////{ФУНКЦИИ}///////////////////////
+
+      function scoreplus(plusscore){
+        score += plusscore;
+        gamescore.textContent="Счет: "+score;
+      }
+
+      function timer() {
+        timersec = setInterval(function() {
+          sec++;
+          if(sec>=60){
+            sec=0;
+            min++;
+            gametime.textContent=min+":"+sec;
+          }
+          else if(sec<10){
+            gametime.textContent=min+":0"+sec;
+          }
+          else{
+            gametime.textContent=min+":"+sec;
+          }
+        }, 1000);
+      }
+
+      document.addEventListener("visibilitychange", () => {
+        if (!gamepause) document.hidden ? clearInterval(timersec) : timer()
+      ;});
+
+      function pause(){
+        if(document.getElementById("gamemenu")!==null){
+          document.getElementById("gamemenu").remove();
+        }
+        if(gamepause){
+          animationwork = requestAnimationFrame(gamego);
+          timer();
+          gamepause=false;
+        }
+        else{
+          cancelAnimationFrame(animationwork);
+          clearInterval(timersec);
+          gamepause=true;
+        }
+      }
+
+      function gamemenuon(){
+        if(document.getElementById("gamemenu")!==null) pause();
+        else{
+          if(!gamepause) pause();
+          const gamemenu = create("div",{id: "gamemenu"},gamecontainer);
+
+          create("div",{id: "gamemenustats"},gamemenu);
+          const gamemenuscore = create("div",{id: "gamescore"},gamemenustats);
+          gamemenuscore.textContent="Счет: "+score;
+          const gamemenutime = create("div",{id: "gametime"},gamemenustats);
+          sec <10 ? gamemenutime.textContent=min+":0"+sec : gamemenutime.textContent=min+":"+sec;
+          
+          if(endgame){
+            createbutton({id: "replaybutton", class:"gamemenubuttons"}, gamemenu, "Начать заново", replay);
+          }
+          else{
+            createbutton({id: "pausebutton", class:"gamemenubuttons"}, gamemenu, "Продолжить", pause);
+          }
+          createbutton({id: "returntomenu", class:"gamemenubuttons"}, gamemenu, "Вернуться в меню", backtomenu);
+        }
+      }
+
+      function saveresult(){
+        if(localStorage){
+          let masscore = JSON.parse(localStorage.getItem("scoretop"));
+          for(let i =0; i<masscore[1].length;i++){
+            if(masscore[1][i]<score){
+              masscore[1][i]=score;
+              masscore[0][i]="DS";
+              break;
+            }
+          }
+          localStorage.setItem("scoretop", JSON.stringify(masscore));
+        }
+      }
+      
+      function replay(){saveresult();startgame();}
+      function backtomenu(){saveresult();menu();}
+
+      //  *Конец игры
+      //cancelAnimationFrame - отменяет запрос кадра анимации
+      function showendgame() {
+        cancelAnimationFrame(animationwork);
+        clearInterval(timersec);
+        endgame = true;
+        gamemenuon();
+      }
 
       //    *Рандомайзер от мин до макс.
       //  ceil - округляет и возвращает наименьшее целое число,
@@ -288,6 +410,7 @@
         //!!undefined = false
         for (let stroka = figurefield.length - 1; stroka >= 0; ) {
           if (figurefield[stroka].every(cell => !!cell)) {
+            scoreplus(10);
             for (let r = stroka; r >= 0; r--) { //Сдвигаем вниз строки
               for (let c = 0; c < figurefield[r].length; c++) {
                 figurefield[r][c] = figurefield[r-1][c]; 
@@ -335,18 +458,11 @@
         }
       }
 
-      //  *Конец игры
-      //cancelAnimationFrame - отменяет запрос кадра анимации
-      function showendgame() {
-        cancelAnimationFrame(animationwork);
-        endgame = true;
-        create("div",{id: "endarea"},document.body);
-        createbutton({id: "returntomenu",}, endarea, "Вернуться в меню", menu);
-      }
+      
 
       /////////////////{Клавиши}/////////////////////
       document.addEventListener("keydown", function(e) {
-        if (endgame) return;
+        if (endgame||gamepause) return;
         let key = e.key;
         if (key=="ArrowLeft"||key=="ArrowRight") { //  Влево, вправо
           const stolb = key=="ArrowLeft" ? figure.stolb-1 : figure.stolb+1;

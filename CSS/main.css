@@ -10,12 +10,6 @@ body {
   justify-content: center;
   user-select: none;
 }
-#game {
-  border: 1px solid white;
-}
-#figuresee {
-  border: 1px solid white;
-}
 #menuarea{
   height: 100%;
   width: 100%;
@@ -42,6 +36,14 @@ body {
 .menubuttons:hover{
   background-color: rgb(160, 160, 160);
   color: white;
+}
+#openprofiles{
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  bottom: 0;
+  right: 0;
+  background-color: white;
 }
 #settingsarea{
   position: absolute;
@@ -97,21 +99,81 @@ body {
 /* #colorchoose{
 
 } */
-#endarea{
+#gamecontainer{
+  height: 100%;
+  width: 100%;
+}
+#game {
   position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  border: 1px solid white;
+}
+#gamestats{
+  /* position: absolute; */
+  float: right;
+  height: 100px;
+  width: 300px;
+  color: white;
+  font-size: 40px;
+  font-family: 'Copperplate', Copperplate, Fantasy;
+  -webkit-text-stroke: 1px #000000;
+  padding-right: 20px;
+}
+#gamescore{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50%;
+}
+#gametime{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50%;
+}
+
+#pausearea{
+  position: absolute;
+  display: flex;
+  margin: 10px;
+}
+#divpausemenu{
+  background-color: white;
+  height: 50px;
+  width: 50px;
+}
+#divpause{
+  background-color: white;
+  height: 50px;
+  width: 50px;
+  margin-left: 10px;
+}
+
+#gamemenu{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 640px;
-  width: 320px;
-  
+  width: 300px;
   background-color: #450d4f;
 }
-#returntomenu{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+#gamemenustats{
+  width: 100%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  font-size: 40px;
+  font-family: 'Copperplate', Copperplate, Fantasy;
+  -webkit-text-stroke: 1px #000000;
+}
+.gamemenubuttons{
+  margin: auto;
   height: 16%;
   width: 75%;
   font-size: 200%;
@@ -119,7 +181,7 @@ body {
   overflow: hidden;
   border-radius: 50%;
 }
-#returntomenu:hover{
+.gamemenubuttons:hover{
   background-color: rgb(160, 160, 160);
   color: white;
 }
