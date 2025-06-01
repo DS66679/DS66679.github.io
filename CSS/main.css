@@ -31,19 +31,11 @@ body {
   overflow: hidden;
   margin-top: 20%;
   background-color: rgb(255, 255, 255);
-  border-radius: 50%;
+  border-radius: 10%;
 }
 .menubuttons:hover{
   background-color: rgb(160, 160, 160);
   color: white;
-}
-#openprofiles{
-  position: absolute;
-  height: 50px;
-  width: 50px;
-  bottom: 0;
-  right: 0;
-  background-color: white;
 }
 #settingsarea{
   position: absolute;
@@ -54,7 +46,7 @@ body {
   display: flex;
   justify-content: center;
 }
-#settingsclosebutton{
+.closebutton{
   position: absolute;
   left: 0;
 }
@@ -99,6 +91,102 @@ body {
 /* #colorchoose{
 
 } */
+
+#chooseprofilearea{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #450d4f;
+  height: 70%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+#chooseprofiletext{
+  height: 5%;
+  margin: 2% 4% 1% 8%;
+  background-color: black;
+  font-size: 20px;
+  font-family: fantasy;
+  color: white;
+}
+#listprofiles{
+  height: 65%;
+  margin: 1%;
+  background-color: #340039;
+}
+#yourprofile{
+  height: 10%;
+  align-content: center;
+  align-self: center;
+  font-size: 30px;
+  font-family: fantasy;
+  color: rgb(255, 255, 255);
+}
+#buttonsprofile{
+  display: flex;
+  height: 20%;
+  justify-content: space-around;
+  align-items: center;
+}
+.profilebuttons{
+  height: 50px;
+  width: 150px;
+  border-radius: 10%;
+}
+.profilebuttons:hover{
+  background-color: #cccccc;
+}
+.numprofile{
+  height: 30px;
+  font-size: 25px;
+  font-family: fantasy;
+  color: rgb(255, 255, 255);
+  padding: 2px 15px;
+}
+
+#ratingarea{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #450d4f;
+  height: 90%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  font-family: fantasy;
+  color: rgb(255, 255, 255);
+}
+#scoretext{
+  margin-top: 2%;
+  height: 6%;
+  align-content: center;
+  align-self: center;
+  font-size: 30px;
+}
+#scorearea{
+  padding: 5%;
+  width: 90%;
+  height: 90%;
+  font-size: 25px;
+  display: flex;
+  flex-direction: column;
+}
+.numrating{
+  display: flex;
+  flex: 1;
+}
+.numratingname{
+  width: 50%;
+}
+.numratingscore{
+  text-align: right;
+  width: 50%;
+}
+
+
 #gamecontainer{
   height: 100%;
   width: 100%;
@@ -110,7 +198,6 @@ body {
   border: 1px solid white;
 }
 #gamestats{
-  /* position: absolute; */
   float: right;
   height: 100px;
   width: 300px;

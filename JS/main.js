@@ -1,11 +1,5 @@
 (function () {
   window.addEventListener("load", loadsait);
-  
-  function fclick(){
-    //document.body.style.backgroundstolbor = "linear-gradient(90deg,rgb(42, 123, 155) 0%, rgb(87, 199, 133) 50%, rgb(237, 221, 83) 100%)";
-    //document.body.style.background = "linear-gradient(90deg,rgb(42, 123, 155) 0%, rgb(87, 199, 133) 50%, rgb(237, 221, 83) 100%)";
-    console.log("click");
-  }
 
   function loadsait() {
     const figures = {
@@ -27,15 +21,23 @@
       "J": "blue",
       "L": "orange"
     };
-    //localStorage.clear()
+    localStorage.clear()
     if (localStorage){
       if(localStorage.scoretop==null){
         let nullscoreresult = [["...","...","...","...","...","...","...","...","...","..."], [0,0,0,0,0,0,0,0,0,0]];
+        //let nullscoreresult = [["a","b","c","d","e","f","g","h","i","j"], [9,8,7,6,5,4,3,2,1,0]];
         localStorage.setItem("scoretop", JSON.stringify(nullscoreresult));
       }
       if(localStorage.profiles==null){
-        //let newprofiles = [""]
-        localStorage.setItem("profiles","");
+        let nullprofiles = ["Player"];
+        localStorage.setItem("profiles",JSON.stringify(nullprofiles));
+      }
+      if(localStorage.getItem("profilenow")!==null){
+        profilenow = localStorage.getItem("profilenow");
+      }
+      else{
+        localStorage.setItem("profilenow", "Player");
+        profilenow = "Player";
       }
     }
 
@@ -64,16 +66,12 @@
     }
 
     function menu(){
-      while (document.body.firstChild) {
-        document.body.removeChild(document.body.firstChild);
-      }
+      while (document.body.firstChild) {document.body.removeChild(document.body.firstChild);}
       create("div",{id: "menuarea"},document.body);
       create("div",{id: "menubuttonsarea"},menuarea);
-      createbutton({id: "startbutton", class: "menubuttons"}, menubuttonsarea, "Старт", startgame);
-      createbutton({id: "testbutton", class: "menubuttons"}, menubuttonsarea, "Результаты", startgame);
+      createbutton({id: "startbutton", class: "menubuttons"}, menubuttonsarea, "Старт", chooseprofile);
+      createbutton({id: "testbutton", class: "menubuttons"}, menubuttonsarea, "Рейтинг", rating);
       createbutton({id: "settingsbutton", class: "menubuttons"}, menubuttonsarea, "Настройки", settings);
-      const openprofiles= create("div",{id: "openprofiles"},menuarea);
-      openprofiles.addEventListener("click",chooseprofile);
       backgroundfigures();
     }
 
@@ -105,10 +103,8 @@
           mousedown = false;
         });
 
-        let settingsclosebutton = create("img",{id: "settingsclosebutton", src:"Data/exit.jpg", alt:"Выйти"},settingsarea);
-        settingsclosebutton.addEventListener("click", function(){
-          settingsarea.remove();
-        });
+        let closebutton = create("img",{class: "closebutton", src:"Data/exit.jpg", alt:"Выйти"},settingsarea);
+        closebutton.addEventListener("click", function(){settingsarea.remove();});
 
         create("div",{id: "figurecontainer"},settingsarea);
         create("div",{id: "trianglesettings1", class: "triangle"},figurecontainer);
@@ -122,9 +118,108 @@
     }
 
     function chooseprofile(){
-      
+      while (document.body.firstChild) {document.body.removeChild(document.body.firstChild);}
+      create("div",{id: "chooseprofilearea"},document.body);
+      let closebutton = create("img",{id:"profileclosebutton",class: "closebutton", src:"Data/exit.jpg", alt:"Выйти"},chooseprofilearea);
+      closebutton.addEventListener("click", menu);
+      const chooseprofiletext = create("input",{id: "chooseprofiletext", type: "text", placeholder: "Введите название профиля"},chooseprofilearea);
+      chooseprofiletext.addEventListener("keydown", profilekeydown);
+      chooseprofiletext.addEventListener("keyup", profilekeyup);
+      create("div",{id: "listprofiles"},chooseprofilearea);
+      const yourprofile = create("div",{id: "yourprofile"},chooseprofilearea);
+      if (localStorage){
+        yourprofile.textContent=localStorage.getItem("profilenow");
+        let masprofiles = JSON.parse(localStorage.getItem("profiles"));
+        for(let i=0; i<masprofiles.length;i++){
+          createprofileN(i,masprofiles[i]);
+        }
+      }
+      create("div",{id: "buttonsprofile"},chooseprofilearea);
+      createbutton({id: "startgamenewprofile", class: "profilebuttons"}, buttonsprofile, "Играть", startgame);
+      const createnewprofile = createbutton({id: "createnewprofile", class: "profilebuttons"}, buttonsprofile, "Создать", createprofile);
+      createnewprofile.disabled=true;
+      const choosenewprofile = createbutton({id: "choosenewprofile", class: "profilebuttons"}, buttonsprofile, "Выбрать", choosethisprofile);
+      choosenewprofile.disabled=true;
+
+
+      let selectprofilenow=null;
+      let before = 0;
+      function selectprofile(){
+        console.log(document.getElementsByClassName("numprofile")[before])
+        document.getElementsByClassName("numprofile")[before].style.removeProperty('background-color');;
+        this.style.backgroundColor = "red";
+        selectprofilenow = this.textContent;
+        before = this.dataset.indexNumber;
+        document.getElementById('choosenewprofile').disabled=false;
+      }
+
+      function createprofileN(index,text){
+        const numprofile = create("div",{class: "numprofile"},listprofiles);
+        numprofile.dataset.indexNumber = index;
+        numprofile.addEventListener("click", selectprofile);
+        numprofile.textContent=text;
+      }
+
+      function createprofile(){
+        if(localStorage){
+          let masprofiles = JSON.parse(localStorage.getItem("profiles"));
+          createprofileN(masprofiles.length,document.getElementById("chooseprofiletext").value);
+          createnewprofile.disabled=true;
+          masprofiles.push(document.getElementById("chooseprofiletext").value);
+          localStorage.setItem("profiles", JSON.stringify(masprofiles));
+          localStorage.setItem("profilenow", document.getElementById("chooseprofiletext").value);
+          yourprofile.textContent=document.getElementById("chooseprofiletext").value;
+        }
+      }
+
+      function choosethisprofile(){
+        if(localStorage){
+          localStorage.setItem("profilenow", selectprofilenow);
+          yourprofile.textContent=selectprofilenow;
+        }
+      }
+
+      function profilekeydown(){
+        if (this.value.length>0) {
+          let masprofiles = JSON.parse(localStorage.getItem("profiles"));
+          for(let i=0; i<masprofiles.length;i++){
+            if(masprofiles[i]!=this.value){createnewprofile.disabled=false;}
+            else{createnewprofile.disabled=true;}
+          }
+        }
+      }
+
+      function profilekeyup(event){
+        let key = event.key;
+        if (key == "Backspace" || key == "Delete") { 
+          if (localStorage&&this.value.length < 1) {
+            createnewprofile.disabled=true;
+          }
+        }
+      }
     }
 
+
+    function rating(){
+      while (document.body.firstChild) {document.body.removeChild(document.body.firstChild);}
+      const ratingarea = create("div",{id: "ratingarea"},document.body);
+      const closebutton = create("img",{id:"profileclosebutton",class: "closebutton", src:"Data/exit.jpg", alt:"Выйти"},ratingarea);
+      closebutton.addEventListener("click", menu);
+      const scoretext = create("div",{id: "scoretext"},ratingarea);
+      scoretext.textContent = "Таблица лидеров:"
+      const scorearea = create("div",{id: "scorearea"},ratingarea);
+      if (localStorage){
+        let masrating = JSON.parse(localStorage.getItem("scoretop"));
+        for(let i=0; i<masrating[1].length;i++){
+          const numprofile = create("div",{class: "numrating"},scorearea);
+          const numratingname = create("div",{class: "numratingname"},numprofile);
+          numratingname.textContent = masrating[0][i];
+          const numratingscore = create("div",{class: "numratingscore"},numprofile);
+          numratingscore.textContent = masrating[1][i];
+        }
+      }
+
+    }
     
     //    *Анимация фигур на фоне (Сильная нагрузка)
     //  Работа тетриса расписана ниже, в startgame!
@@ -141,7 +236,6 @@
       }
       const block = 32;
       
-      let backgroundwork = null;
       let figuresrange = [];
       const figureslist = ["O", "I", "S", "Z", "L", "J", "T"];
       while (figureslist.length) {
@@ -200,9 +294,7 @@
       let sec = 0;
       let min = 0;
       let timersec =null
-      while (document.body.firstChild) {
-        document.body.removeChild(document.body.firstChild);
-      }
+      while (document.body.firstChild) {document.body.removeChild(document.body.firstChild);}
       create("div",{id: "gamecontainer"},document.body);
       create("div",{id: "gamestats"},gamecontainer);
       const gamescore = create("div",{id: "gamescore"},gamestats);
@@ -309,8 +401,16 @@
           let masscore = JSON.parse(localStorage.getItem("scoretop"));
           for(let i =0; i<masscore[1].length;i++){
             if(masscore[1][i]<score){
-              masscore[1][i]=score;
-              masscore[0][i]="DS";
+              let a = score;
+              let b = localStorage.getItem("profilenow");
+              for(let j=i;j<masscore[1].length;j++){
+                let c = masscore[1][j];
+                let d = masscore[0][j]
+                masscore[1][j]=a;
+                masscore[0][j]=b;
+                a=c;
+                b=d;
+              }
               break;
             }
           }
@@ -351,7 +451,7 @@
         }
       }
 
-      //    *Возращает следующую фигуру с её параметрами
+      //    *Возвращает следующую фигуру с её параметрами
       //  pop - удаляет последний элемент из массива--
       //и возвращает этот элемент.
       function nextfigure() {
@@ -379,7 +479,7 @@
                 cellstolb + stolb < 0 || //Выход за левую границу
                 cellstolb + stolb >= figurefield[0].length || //Выход за правую границу
                 cellstroka + stroka >= figurefield.length || //Выход за нижнюю границу
-                figurefield[cellstroka + stroka][cellstolb + stolb]) //Перескается ли с другими фигурами
+                figurefield[cellstroka + stroka][cellstolb + stolb]) //Пересекается ли с другими фигурами
               ) {return false;}
           }
         }
