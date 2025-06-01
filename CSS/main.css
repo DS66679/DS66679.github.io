@@ -1,29 +1,41 @@
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
+
 body {
-  background: linear-gradient(45deg, #450d4f 0%,
-   rgb(165 60 162) 50%, rgb(227 38 99) 100%);
+  background: rgb(26, 26, 26);
   overflow: hidden;
   display: flex;
   justify-content: center;
   user-select: none;
 }
-#menuarea{
+
+#menuarea {
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-#menubuttonsarea{
+
+#namemenu {
+  position: absolute;
+  top: 50px;
+  height: 150px;
+  width: 750px;
+  background-image: url("/Data/name.png");
+}
+
+#menubuttonsarea {
   position: absolute;
   top: 20%;
   height: 60%;
   width: 30%;
 }
-.menubuttons{
+
+.menubuttons {
   height: 16%;
   width: 100%;
   font-size: 300%;
@@ -33,37 +45,53 @@ body {
   background-color: rgb(255, 255, 255);
   border-radius: 10%;
 }
-.menubuttons:hover{
-  background-color: rgb(160, 160, 160);
-  color: white;
+
+.menubuttons:hover {
+  background-color: rgb(214, 214, 214);
 }
-#settingsarea{
+
+#settingsarea {
   position: absolute;
   height: 80%;
   width: 70%;
   top: 10%;
-  background-color: rgb(96 10 103 / 95%);
+  background-color: rgba(48, 48, 48, 0.95);
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-.closebutton{
+
+.closebutton {
+  height: 52px;
+  width: 52px;
+  background-image: url("/Data/exit.jpg");
   position: absolute;
   left: 0;
 }
-#figurecontainer{
-  position: absolute;
+
+.closebutton:hover {
+  background-image: url("/Data/exithoover.jpg");
+}
+
+#figurecontainer {
+  margin-top: 3%;
   height: auto;
   width: auto;
-  top: 3%;
   display: flex;
   align-items: center;
 }
-#figurearea{
+
+#figurearea {
   height: 200px;
   width: 350px;
   margin: 0px 15px;
-  background-color: #450d4f;
+  background-color: #2d2d2d;
 }
+
+#figurecolorsee {
+  margin: 10px;
+}
+
 .triangle {
   width: 0;
   height: 0;
@@ -71,39 +99,79 @@ body {
   border-right: 25px solid transparent;
   border-bottom: 50px solid rgb(168, 168, 168);
 }
+
 .triangle:hover {
   border-bottom: 50px solid rgb(121, 121, 121);
 }
-#trianglesettings1{
+
+#trianglesettings1 {
   transform: rotate(-90deg);
 }
-#trianglesettings2{
+
+#trianglesettings2 {
   transform: rotate(90deg);
 }
-#colorfigure{
-  position: absolute;
-  top: 31%;
-  left: 38%;
+
+#colorfigure {
+  margin-top: 2%;
   width: 25%;
   display: flex;
   justify-content: space-between;
 }
-/* #colorchoose{
 
-} */
+#colorchoosebutton {
+  font-size: 20px;
+  font-family: 'Copperplate', Copperplate, Fantasy;
+}
 
-#chooseprofilearea{
+#settingsgamearea {
+  margin-left: 4%;
+  width: 100%;
+  height: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.divsettingsgame {
+  display: flex;
+}
+
+.settingsseevalue {
+  width: 44px;
+  background-color: black;
+  color: white;
+  font-size: 40px;
+  font-family: 'Copperplate', Copperplate, Fantasy;
+}
+
+.settingsgamebuttons {
+  margin-left: 10px;
+  font-size: 20px;
+  font-family: 'Copperplate', Copperplate, Fantasy;
+}
+
+.settingsseevaluenow {
+  color: white;
+  font-size: 20px;
+  margin-left: 15px;
+  font-family: 'Copperplate', Copperplate, Fantasy;
+  align-content: center;
+}
+
+#chooseprofilearea {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #450d4f;
+  background-color: #2d2d2d;
   height: 70%;
   width: 80%;
   display: flex;
   flex-direction: column;
 }
-#chooseprofiletext{
+
+#chooseprofiletext {
   height: 5%;
   margin: 2% 4% 1% 8%;
   background-color: black;
@@ -111,12 +179,16 @@ body {
   font-family: fantasy;
   color: white;
 }
-#listprofiles{
+
+#listprofiles {
   height: 65%;
   margin: 1%;
-  background-color: #340039;
+  background-color: #1f1f1f;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
-#yourprofile{
+
+#yourprofile {
   height: 10%;
   align-content: center;
   align-self: center;
@@ -124,21 +196,27 @@ body {
   font-family: fantasy;
   color: rgb(255, 255, 255);
 }
-#buttonsprofile{
+
+#buttonsprofile {
   display: flex;
   height: 20%;
   justify-content: space-around;
   align-items: center;
 }
-.profilebuttons{
+
+.profilebuttons {
   height: 50px;
   width: 150px;
   border-radius: 10%;
+  font-size: 30px;
+  font-family: 'Copperplate', Copperplate, Fantasy;
 }
-.profilebuttons:hover{
+
+.profilebuttons:hover {
   background-color: #cccccc;
 }
-.numprofile{
+
+.numprofile {
   height: 30px;
   font-size: 25px;
   font-family: fantasy;
@@ -146,12 +224,12 @@ body {
   padding: 2px 15px;
 }
 
-#ratingarea{
+#ratingarea {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #450d4f;
+  background-color: #2d2d2d;
   height: 90%;
   width: 80%;
   display: flex;
@@ -159,14 +237,16 @@ body {
   font-family: fantasy;
   color: rgb(255, 255, 255);
 }
-#scoretext{
+
+#scoretext {
   margin-top: 2%;
   height: 6%;
   align-content: center;
   align-self: center;
   font-size: 30px;
 }
-#scorearea{
+
+#scorearea {
   padding: 5%;
   width: 90%;
   height: 90%;
@@ -174,30 +254,35 @@ body {
   display: flex;
   flex-direction: column;
 }
-.numrating{
+
+.numrating {
   display: flex;
   flex: 1;
 }
-.numratingname{
+
+.numratingname {
   width: 50%;
 }
-.numratingscore{
+
+.numratingscore {
   text-align: right;
   width: 50%;
 }
 
 
-#gamecontainer{
+#gamecontainer {
   height: 100%;
   width: 100%;
 }
+
 #game {
   position: absolute;
   left: 50%;
   transform: translate(-50%);
-  border: 1px solid white;
+  border: 4px solid white;
 }
-#gamestats{
+
+#gamestats {
   float: right;
   height: 100px;
   width: 300px;
@@ -207,37 +292,42 @@ body {
   -webkit-text-stroke: 1px #000000;
   padding-right: 20px;
 }
-#gamescore{
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 50%;
-}
-#gametime{
+
+#gamescore {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   height: 50%;
 }
 
-#pausearea{
+#gametime {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50%;
+}
+
+#pausearea {
   position: absolute;
   display: flex;
   margin: 10px;
 }
-#divpausemenu{
-  background-color: white;
+
+#divpausemenu {
+  background-image: url("/Data/menu.png");
   height: 50px;
   width: 50px;
-}
-#divpause{
-  background-color: white;
-  height: 50px;
-  width: 50px;
-  margin-left: 10px;
 }
 
-#gamemenu{
+#divpause {
+  background-size: 100%;
+  background-image: url("/Data/pause.png");
+  height: 47px;
+  width: 32px;
+  margin-left: 40px;
+}
+
+#gamemenu {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -246,9 +336,10 @@ body {
   transform: translate(-50%, -50%);
   height: 640px;
   width: 300px;
-  background-color: #450d4f;
+  background-color: #2d2d2d;
 }
-#gamemenustats{
+
+#gamemenustats {
   width: 100%;
   height: 30%;
   display: flex;
@@ -259,7 +350,8 @@ body {
   font-family: 'Copperplate', Copperplate, Fantasy;
   -webkit-text-stroke: 1px #000000;
 }
-.gamemenubuttons{
+
+.gamemenubuttons {
   margin: auto;
   height: 16%;
   width: 75%;
@@ -268,7 +360,106 @@ body {
   overflow: hidden;
   border-radius: 50%;
 }
-.gamemenubuttons:hover{
+
+.gamemenubuttons:hover {
   background-color: rgb(160, 160, 160);
   color: white;
+}
+
+@media (max-width: 800px) {
+  #menubuttonsarea {
+    position: absolute;
+    top: 20%;
+    height: 60%;
+    width: 68%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+  }
+  .closebutton {
+    height: 37px;
+    width: 37px;
+    background-size: 94%;
+  }
+  #namemenu {
+    background-size: 100%;
+    top: 18%;
+    height: 7%;
+    width: 68%;
+  }
+  #figurecontainer {
+    margin-top: 7%;
+    margin-left: 22%;
+  }
+  .triangle {
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 30px solid rgb(168, 168, 168);
+  }
+  #figurecolorsee {
+    height: 45px;
+  }
+  #colorfigure {
+    margin-top: 9%;
+    width: 60%;
+  }
+  #colorchoosebutton {
+    font-size: 10px;
+  }
+  #settingsgamearea {
+    width: 100%;
+    height: 77%;
+  }
+  #figurearea {
+    height: unset;
+    width: unset;
+  }
+  .divsettingsgame {
+    display: unset;
+  }
+  #chooseprofiletext {
+    margin: 2% 1% 1% 15%;
+    font-size: 18px;
+  }
+  #listprofiles {
+    margin: 2%
+  }
+  .profilebuttons {
+    height: unset;
+    width: unset;
+    font-size: 19px;
+  }
+  #scoretext {
+    margin-left: 10%;
+  }
+  #game{
+    top: 15%;
+  }
+  #mobilebuttons {
+    position: absolute;
+    top: 91%;
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+  }
+  #leftbutton{
+    height: 32px;
+    width: 42px;
+    background-image: url("/Data/left.png");
+  }
+  #downbutton{
+    height: 38px;
+    width: 32px;
+    background-image: url("/Data/down.png");
+  }
+  #roratebutton{
+    height: 38px;
+    width: 31px;
+    background-image: url("/Data/up.png");
+  }
+  #rightbutton{
+    height: 31px;
+    width: 38px;
+    background-image: url("/Data/right.png");
+  }
 }
